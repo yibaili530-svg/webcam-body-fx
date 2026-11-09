@@ -1,5 +1,9 @@
 # webcam-body-fx
 
+**[▶ Live demo — open and play](https://yibaili530-svg.github.io/webcam-body-fx/)** · [中文：点开就能玩](https://yibaili530-svg.github.io/webcam-body-fx/)
+
+> Needs a camera + Chrome/Safari. First load downloads MediaPipe models from Google’s CDN. Use `?test=1` for a synthetic demo without a camera.
+
 A webcam page that turns your silhouette into creative WebGL effects — all in the browser, nothing uploaded.
 
 **Pinch** your thumb and index finger once to cycle effects. **Double-pinch** quickly to return to the normal camera view. Press **H** or the faint **ⓘ** button to hide or show the bottom info bar.
@@ -73,6 +77,8 @@ Optional URL flags:
 - Pose assist is opportunistic and may skip frames when the scheduler is busy.
 
 ## 中文简介
+
+**[▶ 在线演示（点开就能玩）](https://yibaili530-svg.github.io/webcam-body-fx/)**
 
 打开摄像头后，用拇指和食指**捏合一次**切换效果（虹彩流体 → 切片重组 → 万花筒 → 涟漪 → 代码雨 → 虚空剪影），**快速捏合两次**回到正常画面。按 **H** 或右下角 **ⓘ** 可隐藏/显示底部信息。
 
