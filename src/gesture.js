@@ -7,13 +7,13 @@ export const TARGET_RADIUS = 0.07;
 
 // Screen space: x right, y down, normalized to the viewport.
 export const TARGETS = [
-  { id: 'L-top', x: 0.08, y: 0.22, label: '虹彩流体', mode: 'effect1', enabled: true },
-  { id: 'L-mid', x: 0.08, y: 0.5, label: '切片重组', mode: 'effect2', enabled: true },
-  { id: 'L-bottom', x: 0.08, y: 0.78, label: '万花筒', mode: 'effect3', enabled: true },
-  { id: 'R-top', x: 0.92, y: 0.22, label: '涟漪', mode: 'effect4', enabled: true },
-  { id: 'R-mid', x: 0.92, y: 0.5, label: '代码', mode: 'effect5', enabled: true },
-  { id: 'R-bottom', x: 0.92, y: 0.78, label: '取消', mode: 'camera', enabled: true },
-  { id: 'L-corner', x: 0.08, y: 0.07, label: '虚空', mode: 'effect6', enabled: true },
+  { id: 'L-top', x: 0.08, y: 0.22, label: 'Fluid', mode: 'effect1', enabled: true },
+  { id: 'L-mid', x: 0.08, y: 0.5, label: 'Slices', mode: 'effect2', enabled: true },
+  { id: 'L-bottom', x: 0.08, y: 0.78, label: 'Kaleidoscope', mode: 'effect3', enabled: true },
+  { id: 'R-top', x: 0.92, y: 0.22, label: 'Ripple', mode: 'effect4', enabled: true },
+  { id: 'R-mid', x: 0.92, y: 0.5, label: 'Code', mode: 'effect5', enabled: true },
+  { id: 'R-bottom', x: 0.92, y: 0.78, label: 'Cancel', mode: 'camera', enabled: true },
+  { id: 'L-corner', x: 0.08, y: 0.07, label: 'Void', mode: 'effect6', enabled: true },
 ];
 
 /** Target circle in screen pixels for a viewport of w x h. */

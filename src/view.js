@@ -202,7 +202,7 @@ export const COMPOSITE_FRAG = /* glsl */ `
 
   float hash(float n) { return fract(sin(n * 12.9898 + 78.233) * 43758.5453); }
 
-  // ---- Effect 2 (切片重组): deformed 10-row grid. Row lines move first; each row's column lines
+  // ---- Effect 2 (Slices): deformed 10-row grid. Row lines move first; each row's column lines
   // move independently. Every boundary is bounded by SLICE_EDGE_AMP cells, so cells never invert.
   // Hand mirror of slices.js sliceWave / sliceEdge / sliceCell / sliceSource.
   float sliceWave(float id, float channel, float t) {
@@ -269,7 +269,7 @@ export const COMPOSITE_FRAG = /* glsl */ `
     return mix(tile, vec3(1.0), line * bordered);
   }
 
-  // ---- Effect 3 (万花筒): mirrored sectors about the effect centre. The sample is the camera at
+  // ---- Effect 3 (Kaleidoscope): mirrored sectors about the effect centre. The sample is the camera at
   // r / KAL_MAG from the centre (a constant ~1.1x magnification), at an angle folded per sector and
   // twisted by the spiral and the slow spin. Samples past the frame edge are reflected back in, not
   // clamped. Samples may come from anywhere in the frame; only the silhouette gate limits the output.
@@ -289,7 +289,7 @@ export const COMPOSITE_FRAG = /* glsl */ `
     return camera(vec2(reflectUnit(q.x), reflectUnit(q.y)));
   }
 
-  // ---- Effect 4 (涟漪): radial wavefronts from the effect centre refract the live camera; the
+  // ---- Effect 4 (Ripple): radial wavefronts from the effect centre refract the live camera; the
   // crests are brightened so each front reads as a ring.
   vec3 ripples(vec2 p) {
     float aspect = uResolution.x / uResolution.y;
@@ -303,7 +303,7 @@ export const COMPOSITE_FRAG = /* glsl */ `
     return camera(q) * (1.0 + RIP_CREST * crest);
   }
 
-  // ---- Effect 5 (代码数字化): the silhouette is a grid of square cells, each showing a glyph from the
+  // ---- Effect 5 (Code rain / digital): the silhouette is a grid of square cells, each showing a glyph from the
   // atlas. Colour and glyph come from the cell's grid position, time and column only: the camera is
   // never sampled here, so no photographic shape or tone can show. Each column runs a bright head
   // with a fading trail. Colour is a global palette state (mono or duo, held for DIGITAL_PALETTE_HOLD),
@@ -352,7 +352,7 @@ export const COMPOSITE_FRAG = /* glsl */ `
     return mix(hue * DIGITAL_BG_LEVEL, glyphColour, ink);
   }
 
-  // ---- Effect 6 (虚空): the whole frame is a warm duotone. The background is the camera's luminance mapped
+  // ---- Effect 6 (Void): the whole frame is a warm duotone. The background is the camera's luminance mapped
   // from deep brown to muted orange; the person (processed coverage, hand matte unioned) is a near-flat
   // saturated fill with slight luminance shading. Just outside the silhouette a warm halo comes from 8 binary
   // taps on a ring of VOID_HALO_R around the pixel: no blur pass. The halo pulses at the ripple rate RIP_W.

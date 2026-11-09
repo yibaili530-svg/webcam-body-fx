@@ -1,6 +1,6 @@
 // Effect mode controller for pinch events. Pure: callers pass the time of each pinch.
 //
-// - A pinch moves to the next effect in CYCLE. From camera (or 取消) the first pinch enters effect1.
+// - A pinch moves to the next effect in CYCLE. From camera (or Cancel) the first pinch enters effect1.
 // - A second pinch within DOUBLE_WINDOW_MS of the first cancels: the mode goes back to camera.
 //   The first switch is shown for up to the window before that cancel (see README).
 // - After a cancel, the next pinch starts fresh: it is a 'next', not a second half of a double.

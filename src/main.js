@@ -42,7 +42,7 @@ const targetEls = Object.fromEntries(TARGETS.map((t) => {
   el.style.left = `${t.x * 100}%`;
   el.style.top = `${t.y * 100}%`;
   el.dataset.enabled = String(t.enabled);
-  el.setAttribute('aria-label', t.enabled ? `${t.label}（也可点击）` : `${t.label}（不可用）`);
+  el.setAttribute('aria-label', t.enabled ? `${t.label} (also clickable)` : `${t.label} (unavailable)`);
   if (!t.enabled) el.setAttribute('aria-disabled', 'true');
   el.innerHTML = `<span class="label">${t.label}</span>`;
   el.addEventListener('click', () => selectMode(t.mode));
@@ -62,11 +62,11 @@ function setStatus(text, kind = 'info') {
 
 function cameraErrorText(kind, err) {
   switch (kind) {
-    case 'denied': return '摄像头权限被拒绝，请在浏览器设置中允许后重试';
-    case 'missing': return '未找到摄像头，请检查连接后重试';
-    case 'overconstrained': return '摄像头不支持所需分辨率';
-    case 'busy': return '摄像头被占用或无法读取，请关闭其他应用后重试';
-    default: return `摄像头错误：${err?.message ?? err}`;
+    case 'denied': return 'Camera permission denied. Allow it in browser settings and try again';
+    case 'missing': return 'No camera found. Check the connection and try again';
+    case 'overconstrained': return 'Camera does not support the required resolution';
+    case 'busy': return 'Camera is in use or cannot be read. Close other apps and try again';
+    default: return `Camera error: ${err?.message ?? err}`;
   }
 }
 
@@ -74,7 +74,7 @@ const camera = createCameraController({
   mediaDevices: navigator.mediaDevices,
   video,
   onLost: () => {
-    if (session) stop('摄像头已断开，请重新连接后点击开始', 'error');
+    if (session) stop('Camera disconnected. Reconnect and click Start', 'error');
   },
 });
 
@@ -86,9 +86,9 @@ function renderTargets() {
 }
 
 function readyStatus(s) {
-  if (!s.view.fluidType) setStatus('设备不支持浮点渲染目标，无法显示流体；仅相机预览', 'error');
-  else if (s.mlFailed) setStatus('模型加载或推理失败；仅相机预览', 'error');
-  else setStatus(isTest ? '就绪（合成数据）' : '就绪', 'ok');
+  if (!s.view.fluidType) setStatus('Device does not support float render targets; fluid unavailable — camera preview only', 'error');
+  else if (s.mlFailed) setStatus('Model load or inference failed — camera preview only', 'error');
+  else setStatus(isTest ? 'Ready (synthetic)' : 'Ready', 'ok');
 }
 
 const diagEl = isDiag ? Object.assign(document.createElement('pre'), { className: 'diag' }) : null;
@@ -109,13 +109,13 @@ function updateDiag(s, now) {
   const pred = s.prediction;
   const stride = stats?.poseStride;
   diagEl.textContent = [
-    `显示 ${s.diagFps.toFixed(0)} fps`,
-    `分割推理 ${fmtMs(stats?.segmentMs)}　手部推理 ${fmtMs(stats?.handsMs)}`,
-    `手部样本龄 ${fmtMs(stats?.handAgeMs)}（超过 300 ms 视为无手；非端到端延迟）`,
-    `掩码龄 ${fmtMs(s.view?.maskAge(now))}（距上次掩码上传；非端到端延迟）`,
-    `姿态推理 ${fmtMs(stats?.poseMs)}　姿态龄 ${fmtMs(stats?.poseAgeMs)}　间隔 ${stride == null ? '不可用' : stride === 0 ? '跳过' : `每 ${stride} 帧`}`,
-    `掩码保持 ${mask?.heldPx ?? 0} 像素（150 ms 内，仅封闭缺口）　姿态胶囊 ${mask?.poseCapsulePx ?? 0} 像素`,
-    `手部预测 视野 ${fmtMs(pred?.horizonMs)}　提前 ${pred ? pred.leadPx.toFixed(1) : '—'} px　增益 ${pred ? pred.gain.toFixed(2) : '—'}（仅显示，不参与手势）`,
+    `Display ${s.diagFps.toFixed(0)} fps`,
+    `Segment ${fmtMs(stats?.segmentMs)}  Hands ${fmtMs(stats?.handsMs)}`,
+    `Hand sample age ${fmtMs(stats?.handAgeMs)} (over 300 ms treated as no hand; not end-to-end latency)`,
+    `Mask age ${fmtMs(s.view?.maskAge(now))} (since last mask upload; not end-to-end latency)`,
+    `Pose ${fmtMs(stats?.poseMs)}  Pose age ${fmtMs(stats?.poseAgeMs)}  Stride ${stride == null ? 'n/a' : stride === 0 ? 'skip' : `every ${stride} frames`}`,
+    `Mask hold ${mask?.heldPx ?? 0} px (within 150 ms, enclosed gaps only)  Pose capsules ${mask?.poseCapsulePx ?? 0} px`,
+    `Hand predict horizon ${fmtMs(pred?.horizonMs)}  lead ${pred ? pred.leadPx.toFixed(1) : '—'} px  gain ${pred ? pred.gain.toFixed(2) : '—'} (display only, not used for gestures)`,
     pinchLine(s, now),
   ].join('\n');
 }
@@ -126,11 +126,11 @@ function pinchLine(s, now) {
   const p = pinch.snapshot();
   const m = modes.snapshot();
   const num = (v, d) => (Number.isFinite(v) ? v.toFixed(d) : '—');
-  const windowLeft = m.pendingAt === null ? '无' : `${Math.max(0, DOUBLE_WINDOW_MS - (now - m.pendingAt)).toFixed(0)} ms`;
-  const last = lastPinch ? `${lastPinch.action === 'cancel' ? '取消' : '下一个'} ${(now - lastPinch.at).toFixed(0)} ms 前` : '无';
+  const windowLeft = m.pendingAt === null ? 'none' : `${Math.max(0, DOUBLE_WINDOW_MS - (now - m.pendingAt)).toFixed(0)} ms`;
+  const last = lastPinch ? `${lastPinch.action === 'cancel' ? 'cancel' : 'next'} ${(now - lastPinch.at).toFixed(0)} ms ago` : 'none';
   return [
-    `捏合 比值 ${num(p.ratio, 3)}　预测 ${num(p.predicted, 3)}　速度 ${num(p.velocity, 2)}/s　状态 ${p.state}`,
-    `最近 ${last}　双击窗口剩余 ${windowLeft}　不应期剩余 ${pinch.cooldownMs(now).toFixed(0)} ms`,
+    `Pinch ratio ${num(p.ratio, 3)}  predicted ${num(p.predicted, 3)}  vel ${num(p.velocity, 2)}/s  state ${p.state}`,
+    `Last ${last}  double window left ${windowLeft}  refractory left ${pinch.cooldownMs(now).toFixed(0)} ms`,
   ].join('\n');
 }
 
@@ -198,7 +198,7 @@ function frame(s, now) {
 }
 
 async function loadML(s) {
-  setStatus('正在加载模型…');
+  setStatus('Loading models…');
   try {
     const { createML } = await import('./ml.js');
     const ml = await createML({
@@ -223,7 +223,7 @@ async function loadML(s) {
 }
 
 function setRunning(running) {
-  startBtn.textContent = running ? '停止' : '开始';
+  startBtn.textContent = running ? 'Stop' : 'Start';
   stage.classList.toggle('running', running);
 }
 
@@ -234,15 +234,15 @@ function attachView(s) {
     s.view = createView({
       host: viewHost,
       video,
-      onContextLost: () => setStatus('WebGL 上下文丢失，等待恢复…', 'error'),
+      onContextLost: () => setStatus('WebGL context lost, waiting to restore…', 'error'),
       onContextRestored: () => readyStatus(s),
-      onError: () => setStatus('着色器编译失败', 'error'),
+      onError: () => setStatus('Shader compile failed', 'error'),
     });
   } catch (err) {
     // Plain mirrored <video> so the preview still works.
     console.error(err);
     stage.classList.add('no-webgl');
-    setStatus('WebGL2 不可用，仅相机预览', 'error');
+    setStatus('WebGL2 unavailable — camera preview only', 'error');
     return;
   }
 
@@ -296,14 +296,14 @@ async function start() {
   }
 
   if (!window.isSecureContext || !navigator.mediaDevices?.getUserMedia) {
-    stop('摄像头需要 HTTPS 或 localhost 环境', 'error');
+    stop('Camera requires HTTPS or localhost', 'error');
     return;
   }
-  setStatus('正在请求摄像头…');
+  setStatus('Requesting camera…');
   await connect(s, camera.start());
 }
 
-function stop(message = '已停止', kind = 'info') {
+function stop(message = 'Stopped', kind = 'info') {
   const s = session;
   session = null;
   if (s) {
@@ -337,9 +337,9 @@ window.addEventListener('pagehide', () => session && stop());
 if (isTest) {
   const { createTestMode } = await import('./testmode.js');
   testMode = createTestMode(stage, { onSelect: (mode) => selectMode(mode) });
-  setStatus('测试模式：点击开始');
+  setStatus('Test mode: click Start');
 } else if (!window.isSecureContext || !navigator.mediaDevices) {
-  setStatus('摄像头需要 HTTPS 或 localhost 环境', 'error');
+  setStatus('Camera requires HTTPS or localhost', 'error');
 } else {
-  setStatus('点击开始。画面仅在本地处理，不录制、不上传');
+  setStatus('Click Start. Video stays on-device — no recording, no upload');
 }

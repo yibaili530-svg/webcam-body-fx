@@ -1,4 +1,4 @@
-// Effect 5 (代码数字化): glyph set, atlas layout and the one-time canvas atlas. No downloaded
+// Effect 5 (Code rain / digital): glyph set, atlas layout and the one-time canvas atlas. No downloaded
 // fonts: the atlas is drawn with the system monospace face on a 2D canvas, once per view.
 
 // Rows of the digital grid (cells are square: the column count follows the aspect). 88 rows

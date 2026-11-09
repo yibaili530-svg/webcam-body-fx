@@ -119,8 +119,8 @@ describe('applyInfoHidden', () => {
     applyInfoHidden({ stage, button }, true);
     expect(stage.classList.contains('info-hidden')).toBe(true);
     expect(button.attrs['aria-pressed']).toBe('true');
-    expect(button.attrs['aria-label']).toBe('显示信息');
-    expect(button.title).toBe('显示信息');
+    expect(button.attrs['aria-label']).toBe('Show info');
+    expect(button.title).toBe('Show info');
   });
 
   it('clears them when shown', () => {
@@ -130,8 +130,8 @@ describe('applyInfoHidden', () => {
     applyInfoHidden({ stage, button }, false);
     expect(stage.classList.contains('info-hidden')).toBe(false);
     expect(button.attrs['aria-pressed']).toBe('false');
-    expect(button.attrs['aria-label']).toBe('隐藏信息');
-    expect(button.title).toBe('隐藏信息');
+    expect(button.attrs['aria-label']).toBe('Hide info');
+    expect(button.title).toBe('Hide info');
   });
 });
 
@@ -246,9 +246,9 @@ describe('index.html and wiring', () => {
     expect(html).toMatch(/id="info-toggle"[^>]*aria-pressed="false"/);
   });
 
-  it('the hint mentions the H key and the toggle, keeping the original text', () => {
-    expect(html).toContain('（按 H 或 ⓘ 隐藏/显示信息）');
-    expect(html).toContain('右下“取消”恢复画面');
+  it('the hint mentions the H key and the toggle', () => {
+    expect(html).toContain('(press H or ⓘ to hide/show info)');
+    expect(html).toContain('bottom-right Cancel restores the view');
   });
 
   it('main.js wires the installer to the stage and the toggle', () => {
@@ -257,8 +257,8 @@ describe('index.html and wiring', () => {
   });
 });
 
-describe('toggle geometry: it never overlaps the 取消 hit circle', () => {
-  // Mirrors style.css: the toggle is 28px, 12px from the right and bottom edges. The 取消 target is at
+describe('toggle geometry: it never overlaps the Cancel hit circle', () => {
+  // Mirrors style.css: the toggle is 28px, 12px from the right and bottom edges. The Cancel target is at
   // (0.92, 0.78) with radius TARGET_RADIUS of the short side (see gesture.js and the --r custom property).
   const cancel = TARGETS.find((t) => t.mode === 'camera');
   const SIZE = 28;
@@ -274,7 +274,7 @@ describe('toggle geometry: it never overlaps the 取消 hit circle', () => {
     return Math.hypot(cx - nx, cy - ny) < r;
   };
 
-  it('the 取消 target is the bottom-right one', () => {
+  it('the Cancel target is the bottom-right one', () => {
     expect(cancel.x).toBeCloseTo(0.92, 9);
     expect(cancel.y).toBeCloseTo(0.78, 9);
   });

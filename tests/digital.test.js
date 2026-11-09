@@ -6,7 +6,7 @@ import {
 import * as digital from '../src/digital.js';
 import { COMPOSITE_FRAG, MODE_INDEX } from '../src/view.js';
 
-// Effect 5 (代码数字化). Three layers of checks:
+// Effect 5 (Code rain / digital). Three layers of checks:
 //  1. Grid and atlas maths (pure functions).
 //  2. Colour and motion: the JS mirror in src/digital.js, whose constants are also injected into the GLSL.
 //  3. Wiring: the GLSL text of digitalCode() / digitalHead() must contain the same expressions as the

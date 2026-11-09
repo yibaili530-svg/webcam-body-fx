@@ -113,7 +113,7 @@ describe('fluid is exempt from the shared tempo and keeps its authored slow flow
   });
 });
 
-describe('effect 6 (虚空) wiring', () => {
+describe('effect 6 (Void) wiring', () => {
   it('MODE_INDEX has effect6 = 6 and the mode-6 branch is the only one testing 6.0', () => {
     expect(MODE_INDEX.effect6).toBe(6);
     expect(COMPOSITE_FRAG.match(/abs\(uMode - 6\.0\) < 0\.5/g)).toHaveLength(1);

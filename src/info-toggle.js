@@ -4,8 +4,8 @@
 // reachable whenever the camera is off.
 
 export const INFO_KEY = 'gateway.infoHidden';
-const LABEL_HIDE = '隐藏信息';
-const LABEL_SHOW = '显示信息';
+const LABEL_HIDE = 'Hide info';
+const LABEL_SHOW = 'Show info';
 
 // Storage can be missing or throw (private mode, blocked cookies). A failure reads as "shown" and is not fatal.
 export function readInfoHidden(storage) {

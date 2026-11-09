@@ -1,4 +1,4 @@
-// Effect 5 (代码数字化) colour and motion: constants shared with the GLSL (view.js injects them) and the
+// Effect 5 (Code rain / digital) colour and motion: constants shared with the GLSL (view.js injects them) and the
 // JS mirror of digitalColour() / digitalGlyph() in COMPOSITE_FRAG. The inputs are the cell's grid
 // position, the time and the column index only. The camera is never read, so glyph shapes and colours
 // carry no photographic content. Tests in tests/digital.test.js exercise these functions.

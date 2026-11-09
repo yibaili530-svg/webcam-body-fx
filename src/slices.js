@@ -1,4 +1,4 @@
-// Effect 2 (切片重组): a deformed grid of SLICE_ROWS rows and sliceColumns(aspect) columns.
+// Effect 2 (Slices): a deformed grid of SLICE_ROWS rows and sliceColumns(aspect) columns.
 // Every row line and every column line (per row) is a bounded, moving function of time, so the
 // cell boundaries move and cell widths and heights (aspect ratios) change continuously. Each
 // cell shows the camera content of its rest rectangle, shifted by a bounded per-cell offset, so

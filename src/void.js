@@ -1,4 +1,4 @@
-// Effect 6 (虚空) look: constants shared with the GLSL (view.js injects them) and a JS mirror of
+// Effect 6 (Void) look: constants shared with the GLSL (view.js injects them) and a JS mirror of
 // voidGrade() in COMPOSITE_FRAG. Display-referred RGB; the shader squares it to linear, as the fluid does.
 // The whole frame is graded: the background is the camera luminance mapped from deep brown to muted
 // orange, and the person is a near-flat saturated fill with a warm halo just outside its edge.

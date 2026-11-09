@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { COVERAGE_MAX_HOLE, COVERAGE_RADIUS, createCoverage } from '../src/coverage.js';
 import { COMPOSITE_FRAG, MODE_INDEX } from '../src/view.js';
 
-// Effects 3 (万花筒) and 4 (涟漪) gate on the processed coverage from coverage.js, plus the hand matte.
+// Effects 3 (Kaleidoscope) and 4 (Ripple) gate on the processed coverage from coverage.js, plus the hand matte.
 // Synthetic fixtures only (not footage): nothing here shows photographed-person accuracy or that a
 // missing limb is recovered. The CPU mirror samples pixel centres (nearest). The shader samples the
 // mask with a bicubic B-spline, so the two agree at pixel centres, not on sub-pixel edges.

@@ -262,20 +262,20 @@ export function createTestMode(root, { onSelect } = {}) {
   panel.className = 'test-panel';
   // Radio group: one scripted hand at a time. Pinch scripts drive the real detector and mode path.
   const choices = [
-    { id: 'none', label: '无手' },
-    { id: 'open', label: 'SYNTHETIC 合成手 · 张开' },
-    { id: 'single', label: 'SYNTHETIC 单次捏合' },
-    { id: 'double', label: 'SYNTHETIC 双击捏合（应取消）' },
-    { id: 'near', label: 'SYNTHETIC 接近但未捏合' },
-    { id: 'slow', label: 'SYNTHETIC 慢速捏合' },
-    { id: 'silhouette', label: 'SYNTHETIC 合成手（可见 + 遮罩，不捏合）' },
+    { id: 'none', label: 'No hand' },
+    { id: 'open', label: 'SYNTHETIC hand - open' },
+    { id: 'single', label: 'SYNTHETIC single pinch' },
+    { id: 'double', label: 'SYNTHETIC double pinch (should cancel)' },
+    { id: 'near', label: 'SYNTHETIC near but not pinched' },
+    { id: 'slow', label: 'SYNTHETIC slow pinch' },
+    { id: 'silhouette', label: 'SYNTHETIC hand (visible + mask, no pinch)' },
   ];
   panel.innerHTML = `
-    <strong>测试模式 · SYNTHETIC 合成画面/遮罩</strong>
+    <strong>Test mode - SYNTHETIC frame/mask</strong>
     <div class="test-buttons">
       ${choices.map((c) => `<button type="button" data-zone="${c.id}" aria-pressed="${c.id === 'none'}">${c.label}</button>`).join('\n      ')}
     </div>
-    <label class="test-select">QA 直接选择效果（不经过捏合判定）
+    <label class="test-select">QA pick effect (bypasses pinch)
       <select data-qa-select>
         ${TARGETS.map((t) => `<option value="${t.mode}">${t.id} ${t.label}</option>`).join('')}
       </select>

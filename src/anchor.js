@@ -1,4 +1,4 @@
-// Effect centre for the radial effects (万花筒, 涟漪): the centroid of the raw person mask,
+// Effect centre for the radial effects (Kaleidoscope, Ripple): the centroid of the raw person mask,
 // computed once per segmentation result. Pure, no DOM. Coordinates are source-normalized
 // (row 0 at the top), the same space as the mask texture.
 

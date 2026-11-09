@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -7,7 +7,8 @@
     <!-- Network allowlist: same origin + model downloads. Also stops the usage metrics
          @mediapipe/tasks-vision would POST to odml.pa.googleapis.com (it has no opt-out). -->
     <meta http-equiv="Content-Security-Policy" content="connect-src 'self' https://storage.googleapis.com" />
-    <title>Gateway</title>
+    <title>webcam-body-fx</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23111111'/%3E%3Ccircle cx='16' cy='16' r='7' fill='none' stroke='%23f5c16c' stroke-width='3'/%3E%3C/svg%3E" />
   </head>
   <body>
     <main id="stage">
@@ -15,10 +16,10 @@
       <video id="video" playsinline muted autoplay></video>
       <div id="targets"></div>
       <div class="bar" id="info-bar">
-        <button type="button" id="info-toggle" class="info-toggle" aria-controls="info-bar" aria-pressed="false" aria-label="隐藏信息" title="隐藏信息">ⓘ</button>
-        <button type="button" id="start">开始</button>
-        <button type="button" id="reset">复位</button>
-        <span class="hint">拇指和食指捏合一次=下一个效果，快速捏合两次=回到正常画面（也可点击效果区域，或用 Tab 键聚焦后按回车；右下“取消”恢复画面）（按 H 或 ⓘ 隐藏/显示信息）</span>
+        <button type="button" id="info-toggle" class="info-toggle" aria-controls="info-bar" aria-pressed="false" aria-label="Hide info" title="Hide info">ⓘ</button>
+        <button type="button" id="start">Start</button>
+        <button type="button" id="reset">Reset</button>
+        <span class="hint">Pinch thumb + index once = next effect; quick double-pinch = normal camera (or click an effect zone / Tab then Enter; bottom-right Cancel restores the view) (press H or ⓘ to hide/show info)</span>
         <span class="status" id="status" role="status"></span>
       </div>
     </main>

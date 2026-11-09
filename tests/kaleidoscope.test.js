@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { COMPOSITE_FRAG, KAL_MAG, KAL_ROT, KAL_SECTORS, KAL_SPIN, KAL_SPIRAL } from '../src/view.js';
 
-// Effect 3 (万花筒). JS mirror of the sampling in kaleidoscope() and reflectUnit() in COMPOSITE_FRAG.
+// Effect 3 (Kaleidoscope). JS mirror of the sampling in kaleidoscope() and reflectUnit() in COMPOSITE_FRAG.
 // Distances are in screen-height units, as in the shader (x is scaled by the aspect first). The
 // wiring tests at the top check that the GLSL text contains these same expressions, so the mirror
 // and the shader cannot drift apart silently. Samples are not compared to pixels; this is the math.
