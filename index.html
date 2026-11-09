@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <!-- Network allowlist: same origin + model downloads. Also stops the usage metrics
+         @mediapipe/tasks-vision would POST to odml.pa.googleapis.com (it has no opt-out). -->
+    <meta http-equiv="Content-Security-Policy" content="connect-src 'self' https://storage.googleapis.com" />
+    <title>Gateway</title>
+  </head>
+  <body>
+    <main id="stage">
+      <div id="view"></div>
+      <video id="video" playsinline muted autoplay></video>
+      <div id="targets"></div>
+      <div class="bar" id="info-bar">
+        <button type="button" id="info-toggle" class="info-toggle" aria-controls="info-bar" aria-pressed="false" aria-label="隐藏信息" title="隐藏信息">ⓘ</button>
+        <button type="button" id="start">开始</button>
+        <button type="button" id="reset">复位</button>
+        <span class="hint">拇指和食指捏合一次=下一个效果，快速捏合两次=回到正常画面（也可点击效果区域，或用 Tab 键聚焦后按回车；右下“取消”恢复画面）（按 H 或 ⓘ 隐藏/显示信息）</span>
+        <span class="status" id="status" role="status"></span>
+      </div>
+    </main>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

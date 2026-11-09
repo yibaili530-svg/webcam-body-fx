@@ -1,0 +1,83 @@
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; background: #08090b; color: #d8dbe0; }
+body { font: 13px/1.4 system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; }
+
+#stage { position: fixed; inset: 0; overflow: hidden; }
+#view { position: absolute; inset: 0; }
+#view canvas { display: block; width: 100%; height: 100%; }
+/* Must stay in the DOM and "visible" so browsers keep decoding frames. */
+#video { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.no-webgl #video { inset: 0; width: 100%; height: 100%; opacity: 1; object-fit: cover; transform: scaleX(-1); }
+
+#targets { position: absolute; inset: 0; pointer-events: none; }
+/* --r (px) is set from the viewport's short side, so the circles stay round on resize. */
+/*
+ * Effect targets are invisible hit regions. They keep their size and position, stay in the
+ * accessibility tree by name, and still take clicks and keyboard activation. Opacity 0 on the
+ * button hides everything inside it (label included), in every state. No display:none or
+ * visibility:hidden, so each target keeps a real box. Keyboard focus is the only visible affordance.
+ */
+.target {
+  position: absolute; width: calc(2 * var(--r, 40px)); height: calc(2 * var(--r, 40px));
+  transform: translate(-50%, -50%); border-radius: 50%; padding: 0; border: 0;
+  background: transparent; color: transparent; cursor: pointer;
+  opacity: 0; touch-action: manipulation;
+}
+.running .target { pointer-events: auto; }
+.target:focus-visible { opacity: 1; outline: 2px solid #7fe3d4; outline-offset: 2px; }
+.target .label {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  font-size: 12px; line-height: 1.2; color: transparent; text-shadow: none; pointer-events: none;
+}
+
+.bar {
+  position: absolute; left: 0; right: 0; bottom: 0; display: flex; flex-wrap: wrap;
+  align-items: center; gap: 6px 12px; padding: 12px 52px calc(12px + env(safe-area-inset-bottom)) 16px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
+}
+/* ⓘ toggle: fixed in the bottom-right corner, small and faint. The bar's right padding keeps the status clear of it. */
+.info-toggle {
+  position: fixed; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); z-index: 1;
+  width: 28px; height: 28px; padding: 0; border-radius: 50%; font-size: 15px; line-height: 1;
+  opacity: 0.35;
+}
+.info-toggle:hover, .info-toggle:focus-visible { opacity: 1; }
+/*
+ * Hidden only while the camera runs. Before Start, after Stop and after a camera error, the whole bar
+ * shows, so Start, permission prompts and the reset button stay reachable.
+ * A status in the error state always stays visible. Hidden items use display:none, so they leave the tab order.
+ */
+#stage.info-hidden.running .bar { background: none; padding: 0; pointer-events: none; }
+#stage.info-hidden.running .bar > :not(.info-toggle):not(.status[data-kind="error"]) { display: none; }
+#stage.info-hidden.running .bar .info-toggle { pointer-events: auto; }
+.bar .hint { color: #eef0f3; }
+.bar .status { flex: 1 1 200px; color: #9aa0a8; text-align: right; }
+.status[data-kind="error"] { color: #ff8f80; }
+.status[data-kind="ok"] { color: #7fe3d4; }
+
+button {
+  padding: 6px 14px; border: 1px solid rgba(255, 255, 255, 0.22); border-radius: 6px;
+  background: rgba(20, 22, 26, 0.75); color: inherit; font: inherit; cursor: pointer;
+}
+button:not(.target):hover { background: rgba(50, 54, 62, 0.85); }
+button[aria-pressed="true"] { border-color: #7fe3d4; color: #7fe3d4; }
+#start { background: #e9ebee; color: #101215; border-color: transparent; }
+#start:hover { background: #fff; }
+
+.test-panel {
+  position: absolute; top: 12px; left: 50%; transform: translateX(-50%); max-width: 66%;
+  padding: 10px 12px; border-radius: 8px;
+  background: rgba(0, 0, 0, 0.65); border: 1px solid #e8c547;
+}
+.test-panel strong { color: #e8c547; font-weight: 600; }
+.test-buttons { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+.test-diag { margin: 0; font: 11px/1.45 ui-monospace, Menlo, monospace; color: #c3c7cd; }
+
+/* Opt-in ?diag=1 overlay; sits above the canvas and ignores pointer input. */
+.diag {
+  position: absolute; top: 12px; left: 12px; margin: 0; padding: 6px 8px; pointer-events: none;
+  font: 12px/1.45 ui-monospace, SFMono-Regular, Menlo, monospace; color: #cfd6de;
+  background: rgba(0, 0, 0, 0.55); border-radius: 6px; white-space: pre;
+}
+.test-select { display: block; margin: 0 0 6px; font: 11px/1.45 ui-monospace, Menlo, monospace; color: #c3c7cd; }
+.test-select select { margin-left: 6px; font: inherit; background: #111; color: #e8e8e8; border: 1px solid #555; border-radius: 4px; }
